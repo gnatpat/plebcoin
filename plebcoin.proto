@@ -1,0 +1,47 @@
+syntax = "proto2";
+
+package experimental.users.npat.hackathon;
+
+message TransactionIn {
+  optional string sender = 1;
+  optional string transaction = 2;
+}
+
+message TransactionOut {
+  optional string receiver = 1;
+  optional float amount = 2;
+}
+
+message Transaction {
+  repeated TransactionIn inputs = 1;
+  repeated TransactionOut outputs = 2;
+  optional int64 timestamp = 6;
+  optional string hash = 3;
+  repeated string signatures = 4;
+  optional bool is_reward = 5 [default=false];
+}
+
+message BlockHeader {
+  optional string prev_hash = 1;
+  optional string merkle_root = 2;
+  optional int64 nonce = 3;
+  optional int64 length = 4;
+  optional int64 timestamp = 5;
+}
+
+message Block {
+  optional BlockHeader header = 1;
+  repeated Transaction transactions = 2;
+}
+
+
+message Announce {
+  optional Block block = 1;
+  optional Transaction transaction = 2;
+  optional string sender = 3;
+
+  optional PaymentInternal payment = 4;
+  optional ValueQuery value_query = 5;
+  optional MineEmptyBlock mine_empty_block = 6;
+  optional GetPublicKey get_public_key = 7;
+}
